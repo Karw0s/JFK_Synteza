@@ -23,7 +23,6 @@ namespace Playground
 
             YIELD<t>();
 
-            YIELD<>();
         }
 
         static IEnumerable<string> GetNames(IEnumerable<string> names)
