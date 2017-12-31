@@ -18,6 +18,12 @@ namespace Playground
             }
 
             Console.WriteLine("Zakonczenie metody GetData.");
+
+            YIELD();
+
+            YIELD<t>();
+
+            YIELD<>();
         }
 
         static IEnumerable<string> GetNames(IEnumerable<string> names)

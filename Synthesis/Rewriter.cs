@@ -22,62 +22,69 @@
                 if (expression.IsKind(SyntaxKind.IdentifierName))
                 {
                     var expressionName = (IdentifierNameSyntax)expression;
-
+                    
                     if (@"YIELD".Equals(expressionName.Identifier.ValueText, StringComparison.Ordinal))
                     {
                         var argumentName = (ArgumentSyntax)expression.Parent.ChildNodes().OfType<ArgumentListSyntax>().FirstOrDefault()?.ChildNodes().FirstOrDefault();
 
-                        var myExpression = SyntaxFactory.ForEachStatement(
-                            SyntaxFactory.Token(SyntaxKind.ForEachKeyword).WithLeadingTrivia(leadingTrivia).WithTrailingTrivia(space),
-                            SyntaxFactory.Token(SyntaxKind.OpenParenToken),
-                            SyntaxFactory.IdentifierName("var").WithTrailingTrivia(space),
-                            SyntaxFactory.Identifier(new SyntaxTriviaList().Add(SyntaxFactory.Whitespace("")), SyntaxKind.IdentifierToken, "item", "item", space),
-                            SyntaxFactory.Token(SyntaxKind.InKeyword).WithTrailingTrivia(space),
-                            argumentName.Expression,
-                            SyntaxFactory.Token(SyntaxKind.CloseParenToken),
-                            SyntaxFactory.Block(
-                                    SyntaxFactory.YieldStatement(
-                                        SyntaxKind.YieldReturnStatement,
-                                        SyntaxFactory.IdentifierName("item")
-                                        ).NormalizeWhitespace()
-                                        .WithLeadingTrivia(leadingWithNewLine.Add(SyntaxFactory.Whitespace("    ")))
-                                        .WithTrailingTrivia(SyntaxFactory.EndOfLine(Environment.NewLine))
-                                    ).WithOpenBraceToken(SyntaxFactory.Token(SyntaxKind.OpenBraceToken).WithLeadingTrivia(leadingWithNewLine))
-                                    .WithCloseBraceToken(SyntaxFactory.Token(SyntaxKind.CloseBraceToken).WithLeadingTrivia(leadingTrivia.Last()))
-                            ).WithTrailingTrivia(SyntaxFactory.EndOfLine(Environment.NewLine));
+                        if (argumentName != null)
+                        {
+                            var myExpression = SyntaxFactory.ForEachStatement(
+                                                SyntaxFactory.Token(SyntaxKind.ForEachKeyword).WithLeadingTrivia(leadingTrivia).WithTrailingTrivia(space),
+                                                SyntaxFactory.Token(SyntaxKind.OpenParenToken),
+                                                SyntaxFactory.IdentifierName("var").WithTrailingTrivia(space),
+                                                SyntaxFactory.Identifier(new SyntaxTriviaList().Add(SyntaxFactory.Whitespace("")), SyntaxKind.IdentifierToken, "item", "item", space),
+                                                SyntaxFactory.Token(SyntaxKind.InKeyword).WithTrailingTrivia(space),
+                                                argumentName.Expression,
+                                                SyntaxFactory.Token(SyntaxKind.CloseParenToken),
+                                                SyntaxFactory.Block(
+                                                        SyntaxFactory.YieldStatement(
+                                                            SyntaxKind.YieldReturnStatement,
+                                                            SyntaxFactory.IdentifierName("item")
+                                                            ).NormalizeWhitespace()
+                                                            .WithLeadingTrivia(leadingWithNewLine.Add(SyntaxFactory.Whitespace("    ")))
+                                                            .WithTrailingTrivia(SyntaxFactory.EndOfLine(Environment.NewLine))
+                                                        ).WithOpenBraceToken(SyntaxFactory.Token(SyntaxKind.OpenBraceToken).WithLeadingTrivia(leadingWithNewLine))
+                                                        .WithCloseBraceToken(SyntaxFactory.Token(SyntaxKind.CloseBraceToken).WithLeadingTrivia(leadingTrivia.Last()))
+                                                ).WithTrailingTrivia(SyntaxFactory.EndOfLine(Environment.NewLine));
 
-                        return myExpression;
+                            return myExpression; 
+                        }
                     }
                 }
                 else if (expression.IsKind(SyntaxKind.GenericName))
                 {
-                    var espressionName = (GenericNameSyntax)expression;
-
-                    if (@"YIELD".Equals(espressionName.Identifier.ValueText, StringComparison.Ordinal))
+                    var expressionName = (GenericNameSyntax)expression;
+                    
+                    if (@"YIELD".Equals(expressionName.Identifier.ValueText, StringComparison.Ordinal))
                     {
                         var argumentName = (ArgumentSyntax)expression.Parent.ChildNodes().OfType<ArgumentListSyntax>().FirstOrDefault()?.ChildNodes().FirstOrDefault();
-                        var predefinedTypeName = (PredefinedTypeSyntax)expression.ChildNodes().OfType<TypeArgumentListSyntax>().FirstOrDefault()?.ChildNodes().FirstOrDefault(); ;
+                        
+                            if (argumentName != null)
+                            {
+                            var predefinedTypeName = (PredefinedTypeSyntax)expression.ChildNodes().OfType<TypeArgumentListSyntax>().FirstOrDefault()?.ChildNodes().FirstOrDefault(); ;
 
-                        var myExpression = SyntaxFactory.ForEachStatement(
-                            SyntaxFactory.Token(SyntaxKind.ForEachKeyword).WithLeadingTrivia(leadingTrivia).WithTrailingTrivia(space),
-                            SyntaxFactory.Token(SyntaxKind.OpenParenToken),
-                            predefinedTypeName.WithTrailingTrivia(space),
-                            SyntaxFactory.Identifier(new SyntaxTriviaList().Add(SyntaxFactory.Whitespace("")), SyntaxKind.IdentifierToken, "item", "item", space),
-                            SyntaxFactory.Token(SyntaxKind.InKeyword).WithTrailingTrivia(space),
-                            argumentName.Expression,
-                            SyntaxFactory.Token(SyntaxKind.CloseParenToken),
-                            SyntaxFactory.Block(
-                                    SyntaxFactory.YieldStatement(
-                                        SyntaxKind.YieldReturnStatement,
-                                        SyntaxFactory.IdentifierName("item")
-                                        ).NormalizeWhitespace()
-                                        .WithLeadingTrivia(leadingWithNewLine.Add(SyntaxFactory.Whitespace("    ")))
-                                        .WithTrailingTrivia(SyntaxFactory.EndOfLine(Environment.NewLine))
-                                    ).WithOpenBraceToken(SyntaxFactory.Token(SyntaxKind.OpenBraceToken).WithLeadingTrivia(leadingWithNewLine))
-                                    .WithCloseBraceToken(SyntaxFactory.Token(SyntaxKind.CloseBraceToken).WithLeadingTrivia(leadingTrivia.Last()))
-                            ).WithTrailingTrivia(SyntaxFactory.EndOfLine(Environment.NewLine));
+                            var myExpression = SyntaxFactory.ForEachStatement(
+                                                    SyntaxFactory.Token(SyntaxKind.ForEachKeyword).WithLeadingTrivia(leadingTrivia).WithTrailingTrivia(space),
+                                                    SyntaxFactory.Token(SyntaxKind.OpenParenToken),
+                                                    predefinedTypeName.WithTrailingTrivia(space),
+                                                    SyntaxFactory.Identifier(new SyntaxTriviaList().Add(SyntaxFactory.Whitespace("")), SyntaxKind.IdentifierToken, "item", "item", space),
+                                                    SyntaxFactory.Token(SyntaxKind.InKeyword).WithTrailingTrivia(space),
+                                                    argumentName.Expression,
+                                                    SyntaxFactory.Token(SyntaxKind.CloseParenToken),
+                                                    SyntaxFactory.Block(
+                                                            SyntaxFactory.YieldStatement(
+                                                                SyntaxKind.YieldReturnStatement,
+                                                                SyntaxFactory.IdentifierName("item")
+                                                                ).NormalizeWhitespace()
+                                                                .WithLeadingTrivia(leadingWithNewLine.Add(SyntaxFactory.Whitespace("    ")))
+                                                                .WithTrailingTrivia(SyntaxFactory.EndOfLine(Environment.NewLine))
+                                                            ).WithOpenBraceToken(SyntaxFactory.Token(SyntaxKind.OpenBraceToken).WithLeadingTrivia(leadingWithNewLine))
+                                                            .WithCloseBraceToken(SyntaxFactory.Token(SyntaxKind.CloseBraceToken).WithLeadingTrivia(leadingTrivia.Last()))
+                                                    ).WithTrailingTrivia(SyntaxFactory.EndOfLine(Environment.NewLine));
 
-                        return myExpression;
+                                return myExpression; 
+                            }
                     }
                 }
             }
